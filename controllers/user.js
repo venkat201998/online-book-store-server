@@ -132,12 +132,13 @@ exports.getUserCart = async (req, res) => {
 
 exports.getUserDummyCart = async (req, res) => {
   const user = await User.findOne({ email: req.user.email }).exec();
-
-  let cart = await DummyCart.findOne({ orderdBy: user._id })
+  if(user){
+    let cart = await DummyCart.findOne({ orderdBy: user._id })
     .populate()
     .exec();
-  console.log(cart)
-  res.json(cart);
+    console.log(cart)
+    res.json(cart);
+  }
 };
 
 exports.emptyCart = async (req, res) => {
